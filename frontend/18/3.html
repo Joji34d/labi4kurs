@@ -1,0 +1,37 @@
+<style>
+    .regex-example {
+        background-color: #fff;
+        padding: 15px;
+        border-radius: 4px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+    }
+    .regex-example h3 {
+        margin-top: 0;
+    }
+    .regex-example pre {
+        background-color: #f8f9fa;
+        padding: 10px;
+        border-radius: 4px;
+    }
+</style>
+
+<div class="regex-example">
+    <h3>Пример использования RegExp.test()</h3>
+    <pre id="testOutput"></pre>
+</div>
+
+<div class="regex-example">
+    <h3>Пример использования String.replace()</h3>
+    <pre id="replaceOutput"></pre>
+</div>
+
+<script>
+    // Пример использования RegExp.test()
+    const regex = /hello/;
+    document.getElementById('testOutput').textContent = regex.test("hello world"); // true
+
+    // Пример использования String.replace()
+    const str = "hello world";
+    document.getElementById('replaceOutput').textContent = str.replace(/world/, "earth"); // "hello earth"
+</script>

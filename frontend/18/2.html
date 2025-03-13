@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Валидация формы</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 10px;
+        }
+        #output {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            max-width: 400px;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Форма с валидацией</h1>
+    <form id="userForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label>Пол:</label>
+        <input type="radio" id="male" name="gender" value="Мужской" required> Мужской
+        <input type="radio" id="female" name="gender" value="Женский"> Женский<br><br>
+
+        <label>Интересы:</label>
+        <input type="checkbox" id="sports" name="interests" value="Спорт"> Спорт
+        <input type="checkbox" id="music" name="interests" value="Музыка"> Музыка
+        <input type="checkbox" id="books" name="interests" value="Книги"> Книги<br><br>
+
+        <label for="country">Страна:</label>
+        <select id="country" name="country">
+            <option value="Россия">Россия</option>
+            <option value="США">США</option>
+            <option value="Германия">Германия</option>
+        </select><br><br>
+
+        <button type="button" onclick="getFormData()">Отправить</button>
+    </form>
+
+    <div id="output"></div>
+
+    <script>
+        function validateForm() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            let isValid = true;
+
+            // Очистка предыдущих ошибок
+            document.querySelectorAll('.error').forEach(error => error.remove());
+
+            if (name.trim() === "") {
+                showError('name', 'Поле "Имя" не может быть пустым.');
+                isValid = false;
+            }
+
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showError('email', 'Введите корректный email.');
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const error = document.createElement('div');
+            error.className = 'error';
+            error.textContent = message;
+            field.parentNode.insertBefore(error, field.nextSibling);
+        }
+
+        function getFormData() {
+            if (!validateForm()) return;
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const interests = [];
+            document.querySelectorAll('input[name="interests"]:checked').forEach(checkbox => {
+                interests.push(checkbox.value);
+            });
+            const country = document.getElementById('country').value;
+
+            const output = `
+                <h2>Введенные данные:</h2>
+                <p><strong>Имя:</strong> ${name}</p>
+                <p><strong>Email:</strong> ${email}</p>
+                <p><strong>Пол:</strong> ${gender}</p>
+                <p><strong>Интересы:</strong> ${interests.join(', ')}</p>
+                <p><strong>Страна:</strong> ${country}</p>
+            `;
+
+            document.getElementById('output').innerHTML = output;
+        }
+    </script>
+</body>
+</html>
