@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работа с Local Storage</title>
+</head>
+<body>
+    <h1>Введите ваши данные</h1>
+    <form id="userForm">
+        <label for="name">ФИО:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="dob">Дата рождения:</label>
+        <input type="date" id="dob" name="dob" required><br><br>
+        <label for="birthplace">Место рождения:</label>
+        <input type="text" id="birthplace" name="birthplace" required><br><br>
+        <label for="hobbies">Увлечения:</label>
+        <textarea id="hobbies" name="hobbies" required></textarea><br><br>
+        <button type="submit">Сохранить в Local Storage</button>
+    </form>
+
+    <h2>Сохраненные данные</h2>
+    <div id="savedData"></div>
+    <button onclick="clearStorage()">Очистить Local Storage</button>
+
+    <script>
+        // Функция для сохранения данных в Local Storage
+        function saveToLocalStorage() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const dob = document.getElementById('dob').value;
+            const birthplace = document.getElementById('birthplace').value;
+            const hobbies = document.getElementById('hobbies').value;
+
+            localStorage.setItem('name', name);
+            localStorage.setItem('email', email);
+            localStorage.setItem('dob', dob);
+            localStorage.setItem('birthplace', birthplace);
+            localStorage.setItem('hobbies', hobbies);
+
+            alert('Данные сохранены в Local Storage!');
+            loadFromLocalStorage();
+        }
+
+        // Функция для загрузки данных из Local Storage
+        function loadFromLocalStorage() {
+            const savedData = document.getElementById('savedData');
+            savedData.innerHTML = `
+                <p>ФИО: ${localStorage.getItem('name') || 'Нет данных'}</p>
+                <p>Электронная почта: ${localStorage.getItem('email') || 'Нет данных'}</p>
+                <p>Дата рождения: ${localStorage.getItem('dob') || 'Нет данных'}</p>
+                <p>Место рождения: ${localStorage.getItem('birthplace') || 'Нет данных'}</p>
+                <p>Увлечения: ${localStorage.getItem('hobbies') || 'Нет данных'}</p>
+            `;
+        }
+
+        // Функция для очистки Local Storage
+        function clearStorage() {
+            localStorage.clear();
+            alert('Local Storage очищен!');
+            loadFromLocalStorage();
+        }
+
+        // Обработчик отправки формы
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            saveToLocalStorage();
+        });
+
+        // Загрузка данных из Local Storage при загрузке страницы
+        window.onload = loadFromLocalStorage;
+    </script>
+</body>
+</html>
