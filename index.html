@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .dropdown {
+            margin: 10px 0;
+        }
+        .dropdown select {
+            width: 200px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+    <script>
+        function navigate(selectElement) {
+            const url = selectElement.value;
+            if (url) {
+                window.open(url, '_blank');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h2>Лабораторные работы по front-end и back-end</h2>
+
+        <div class="dropdown">
+            <label for="dropdown1">15-16:</label>
+            <select id="dropdown1" onchange="navigate(this)">
+                <option value="">Выбрать лб</option>
+                <option value="frontend\15-16\1 zadanie/1incapsulacia/1.html">1 задание: инкапсуляция</option>
+                <option value="frontend\15-16\1 zadanie/2nasledovanie/2.html">2 задание: Полиморфизм</option>
+                <option value="frontend\15-16\1 zadanie/3polimorfizm/3.html">3 задание: Регристрация</option>
+                <option value="frontend\15-16\1 zadanie/4polimorfizm/4.html">4 задание: Регристрация</option>
+                <option value="frontend\15-16\game.html">игрушка на javescript</option>
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <label for="dropdown3">17:</label>
+            <select id="dropdown3" onchange="navigate(this)">
+                <option value="">Выбрать лб</option>
+                <option value="frontend\17\index.html">17 лб: сайт для выполнения задания</option>ion>
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <label for="dropdown4">18:</label>
+            <select id="dropdown4" onchange="navigate(this)">
+                <option value="">Выбрать лб</option>
+                <option value="frontend\18\1.html">1 задание</option>
+                <option value="frontend\18\2.html">2 задание</option>
+                <option value="frontend\18\3.html">3 задание</option>
+            </select>
+        </div>
+
+        <div class="dropdown">
+            <label for="dropdown5">19-20:</label>
+            <select id="dropdown5" onchange="navigate(this)">
+                <option value="">Выбрать лб</option>
+                <option value="frontend\19-20\1z\1.html">1 задание</option>
+                <option value="frontend\19-20\2z\2.html">2 задание</option>
+                <option value="frontend\19-20\3z\3.html">3 задание</option>
+            </select>
+        </div>
+    </div>
+</body>
+</html>
