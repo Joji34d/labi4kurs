@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Работа с COOKIE</title>
+</head>
+<body>
+    <h1>Введите ваши данные</h1>
+    <form id="userForm">
+        <label for="name">ФИО:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        <label for="email">Электронная почта:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        <label for="dob">Дата рождения:</label>
+        <input type="date" id="dob" name="dob" required><br><br>
+        <label for="birthplace">Место рождения:</label>
+        <input type="text" id="birthplace" name="birthplace" required><br><br>
+        <label for="hobbies">Увлечения:</label>
+        <textarea id="hobbies" name="hobbies" required></textarea><br><br>
+        <button type="submit">Сохранить в COOKIE</button>
+    </form>
+
+    <h2>Сохраненные данные</h2>
+    <div id="savedData"></div>
+    <button onclick="clearCookies()">Очистить COOKIE</button>
+
+    <script>
+        // Функция для установки куки
+        function setCookie(name, value, days = 7) {
+            const date = new Date();
+            date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+            const expires = "expires=" + date.toUTCString();
+            document.cookie = `${name}=${value}; ${expires}; path=/`;
+        }
+
+        // Функция для получения куки
+        function getCookie(name) {
+            const cookies = document.cookie.split(';').reduce((acc, cookie) => {
+                const [key, value] = cookie.trim().split('=');
+                acc[key] = value;
+                return acc;
+            }, {});
+            return cookies[name];
+        }
+
+        // Функция для очистки куки
+        function clearCookies() {
+            document.cookie.split(';').forEach(cookie => {
+                const [key] = cookie.trim().split('=');
+                document.cookie = `${key}=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/`;
+            });
+            alert('COOKIE очищены!');
+            loadCookies();
+        }
+
+        // Функция для загрузки данных из куки
+        function loadCookies() {
+            const savedData = document.getElementById('savedData');
+            savedData.innerHTML = `
+                <p>ФИО: ${getCookie('name') || 'Нет данных'}</p>
+                <p>Электронная почта: ${getCookie('email') || 'Нет данных'}</p>
+                <p>Дата рождения: ${getCookie('dob') || 'Нет данных'}</p>
+                <p>Место рождения: ${getCookie('birthplace') || 'Нет данных'}</p>
+                <p>Увлечения: ${getCookie('hobbies') || 'Нет данных'}</p>
+            `;
+        }
+
+        // Обработчик отправки формы
+        document.getElementById('userForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const dob = document.getElementById('dob').value;
+            const birthplace = document.getElementById('birthplace').value;
+            const hobbies = document.getElementById('hobbies').value;
+
+            setCookie('name', name);
+            setCookie('email', email);
+            setCookie('dob', dob);
+            setCookie('birthplace', birthplace);
+            setCookie('hobbies', hobbies);
+
+            alert('Данные сохранены в COOKIE!');
+            loadCookies();
+        });
+
+        // Загрузка данных из куки при загрузке страницы
+        window.onload = loadCookies;
+    </script>
+</body>
+</html>
